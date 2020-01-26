@@ -280,7 +280,7 @@ class Transmission : AppCompatActivity() {
             Request.Method.GET, url,
             Response.Listener<String> { response ->
                 Log.i("SUCCESS", "")
-                //attendeeObjects.clear()
+                attendeeObjects.clear()
                 val gson = Gson()
                 val attendeeTutorialType = object : TypeToken<Array<AttendanceResponses>>() {}.type
                 var attendee: Array<AttendanceResponses> =
