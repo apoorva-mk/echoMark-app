@@ -23,13 +23,13 @@ import io.chirp.chirpsdk.models.ChirpError
 import io.chirp.chirpsdk.models.ChirpErrorCode
 import org.json.JSONObject
 import android.content.SharedPreferences
+import android.support.v7.widget.LinearLayoutManager
+import kotlinx.android.synthetic.main.activity_transmission.*
 
 
-
-private const val CHIRP_APP_KEY = "FBD7A2C6Be3CC67DBfeFeeBf3"
-private const val CHIRP_APP_SECRET = "21F7fdfF3840332006e51D3a88abed7d1b6eB259DCe28eFdDC"
-private const val CHIRP_APP_CONFIG =
-    "qbMUMM7nHFxEra/jiziXK1qDXKtolXD8PxRdA36rR8zrm6TV9GsOrjJPM6shsY05NjuBQsr7pq3vKqoMYCmFHJ681DHJ8TPAsUTLE7G3F3dOOW8Yhaw84cD6FEuJX7O61zbH+K9M1WguOMOh/i6zl53FPqWTRpW6Z0aFkmMJ0hky9z2u/MWVfEUuuAJ2Wr+Xa8lRMCSitzqYlJE/MZJ8wvpLHNk1Qb0Hj3LCsUsKfjnFVmbK0yv7pRlTDeAddyy/SIEWCaUrXdTYhxkqguyf6oSLxoI4O+wLNUFookf7pBqD677h4I/vkZgYtrwxVPtWBBEsPopL/x5Q9CDvqp3I1GfGaXNR/0rsKc26q/L740b+SVRf+rk2YA3N0ByxvU55py2jP5U0iXWECEYs4xF+PaNB48qXxbzCbBvKd+GjaiWCmU8vv2kkpVt/07F2DgYavaZcjK6f4HUM92hzQHVGDuHYbjVCVxPNlEwzJdS/HGYZzf1Ioa6LeHHLfP+tXg/hrWLYjN5WGdLsqquuuFJwhg5bEX+lPNz4sd1GEnaHmX9c62/PObG4wM6M6ON/YYCYWzMa/zwgp7eJ7HjPdcD9d9CYXl8tpk37tPgRytL6rUKWB3pYFMsG8BSB9V+VzwCJ28dMj/Q/o4HfkJ1PzmtN6TxfUc1Pd6eNzCeSHolTxBK37HZ0SGYa4Y2X1BNM5JFGIWj6yu6vxx2Xi0mhj6h1pWVbYRv/z1p8bg56HDtZcsOcRxYANtJ5cXFsVpK9YxKDuZ621SycvR8BRpSYSm4txCQTpf6ElThyRR6f2olYv5afCtFdSyvUmJarzO/AviLVoZnjmJ3iYeGCJ6gNRaAobWj4qmRE7vR6LvvAr1cwZ+E="
+private const val CHIRP_APP_KEY = "Fcae7f3Fc0611f27EDCdAa1Ef"
+private const val CHIRP_APP_SECRET = "daB2BAA1Db87D1113cA74BAA6AA03B2FB6b7FF12Fd89ab60c3"
+private const val CHIRP_APP_CONFIG = "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"
 private const val REQUEST_RECORD_AUDIO = 1
 
 class Transmission : AppCompatActivity() {
@@ -38,14 +38,15 @@ class Transmission : AppCompatActivity() {
     private lateinit var configError: ChirpError
     private lateinit var identifier: String
     private lateinit var payload: ByteArray
-
+    val attendees: ArrayList<String> = ArrayList()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_transmission)
         val rippleBackground = findViewById<View>(R.id.content) as RippleBackground
         val sendBtn = findViewById<Button>(R.id.sendBtn) as Button
+        val refreshBtn = findViewById<Button>(R.id.refresh) as Button
 
-
+        addAttendees()
 
         chirpSdk = ChirpSDK(this, CHIRP_APP_KEY, CHIRP_APP_SECRET)
         configError = chirpSdk.setConfig(CHIRP_APP_CONFIG)
@@ -71,21 +72,49 @@ class Transmission : AppCompatActivity() {
             } else {
                 val message = String(data, Charsets.UTF_8)
                 Log.i("Message: ", message)
+                toast(message)
+
+                val path = "attendances.json"
+                val params = JSONObject()
+                val sharedPref = this?.getSharedPreferences("User", Context.MODE_PRIVATE)
+
+                val a = sharedPref.getInt("id", 1000)
+                params.put("user_id", a.toString())
+                params.put("key", message)
+                val service = ServiceVolley()
+                val apiController = APIController(service)
+
+                apiController.post(path, params) { response ->
+                    // Parse the result
+                    Log.i("Success", response.toString())
+                }
+
             }
         }
 
-        getSessionKey()
+
 
         sendBtn?.setOnClickListener()
         {
-            // Toast.makeText(this@MainActivity, "Button click" , Toast.LENGTH_LONG).show()
-            chirpSdk.send(payload)
+            // Toast.makeText(this@MainActivity, "But
+            // ton click" , Toast.LENGTH_LONG).show()
+            getSessionKey()
+            //chirpSdk.send(payload)
             rippleBackground.startRippleAnimation()
+
 //            intent = Intent(this, Transmission::class.java)
 //            startActivity(intent)
 
         }
-        sendMessage()
+
+        refreshBtn?.setOnClickListener {
+            addAttendees()
+            attendance_list.layoutManager = LinearLayoutManager(this)
+            attendance_list.adapter = AttendeeAdapter(attendees, this)
+        }
+
+
+
     }
 
     fun Context.toast(message: CharSequence) =
@@ -191,11 +220,29 @@ class Transmission : AppCompatActivity() {
         }
     }
 
+    private fun addAttendees(){
+//        attendees.add("AAA")
+//        attendees.add("BBB")
+        val service = ServiceVolley()
+        val apiController = APIController(service)
 
-    private fun sendMessage() {
+        val path = "attendances.json"
+        val params = JSONObject()
+        apiController.post(path, params) { response ->
+            // Parse the result
+            Log.i("Success", response.toString())
+            if(response!=null){
+                var arr = response.getJSONArray("")
+                for (i in 0 until arr.length()) {
+                    Log.i("fsdfd", arr.get(i).toString())
+                   // val item = response.getJSONObject(response(i))
+                }
+            }
 
-        sendPayload("hello.........")
-        //Log.i("No of messages sent ", "8")
+        }
+
 
     }
+
+
 }
