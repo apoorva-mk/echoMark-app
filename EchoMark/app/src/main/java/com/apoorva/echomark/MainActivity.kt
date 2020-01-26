@@ -46,11 +46,7 @@ private const val REQUEST_RECORD_AUDIO = 1
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
-    private lateinit var chirpSdk: ChirpSDK
     private lateinit var context: Context
-    private lateinit var configError: ChirpError
-    private lateinit var identifier : String
-    private lateinit var payload: ByteArray
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -75,33 +71,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         waveHeader.start()
 
 
-        chirpSdk = ChirpSDK(this, CHIRP_APP_KEY, CHIRP_APP_SECRET)
-        configError = chirpSdk.setConfig(CHIRP_APP_CONFIG)
-        identifier = "hello"
-        payload= identifier.toByteArray()
 
-        var error = chirpSdk.setConfig(CHIRP_APP_CONFIG)
-        if (error.code == 0) {
-            Log.v("ChirpSDK: ", "Configured ChirpSDK")
-        } else {
-            Log.e("ChirpError: ", error.message)
-        }
-
-        chirpSdk.onReceived { data: ByteArray?, channel: Int ->
-            /**
-             * onReceived is called when a receive event has completed.
-             * If the payload was decoded successfully, it is passed in data.
-             * Otherwise, data is null.
-             */
-            Log.i("Receiveeeeeeeee: ", "Success")
-            if(data==null) {
-                Log.i("Error: ", "No message body")
-            }
-            else{
-                val message = String(data, Charsets.UTF_8)
-                Log.i("Message: ", message)
-            }
-        }
         val button = findViewById(R.id.button) as Button
         button?.setOnClickListener()
         {
@@ -168,66 +138,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         return true
     }
 
-    override fun onResume() {
-        super.onResume()
-
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.RECORD_AUDIO), REQUEST_RECORD_AUDIO)
-        } else {
-            // Start ChirpSDK sender and receiver, if no arguments are passed both sender and receiver are started
-            var error = chirpSdk.start(send = true, receive = true)
-            if (error.code > 0) {
-                Log.e("ChirpError: ", error.message)
-            } else {
-                Log.v("ChirpSDK: ", "Started ChirpSDK")
-            }
-        }
-    }
-
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
-        when (requestCode) {
-            REQUEST_RECORD_AUDIO -> {
-                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    var error = chirpSdk.start()
-                    if (error.code > 0) {
-                        Log.e("ChirpError: ", error.message)
-                    } else {
-                        Log.v("ChirpSDK: ", "Started ChirpSDK")
-                    }
-                }
-                return
-            }
-        }
-    }
-
-    override fun onPause() {
-        super.onPause()
-        chirpSdk.stop()
-    }
 
 
 
 
-    private fun sendPayload(payload: String) {
-        /**
-         * A payload is a byte array dynamic size with a maximum size defined by the config string.
-         *
-         * Convert String payload to  a byte array, and send it.
-         */
-        val payload = payload.toByteArray(Charsets.UTF_8)
-        val maxPayloadLength = chirpSdk.maxPayloadLength()
-        if (payload.size > maxPayloadLength) {
-            Log.e("ChirpSDKError: ", "Payload too long")
-            return;
-        }
-        val error = chirpSdk.send(payload)
-        if (error.code > 0) {
-            val volumeError = ChirpError(ChirpErrorCode.CHIRP_SDK_INVALID_VOLUME, "Volume too low. Please increase volume!")
-            if (error.code == volumeError.code) {
-                context.toast(volumeError.message)
-            }
-            Log.e("ChirpSDKError: ", error.message)
-        }
-    }
 
 }
