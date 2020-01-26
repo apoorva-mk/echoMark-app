@@ -78,8 +78,18 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         {
            // Toast.makeText(this@MainActivity, "Button click" , Toast.LENGTH_LONG).show()
             //chirpSdk.send(payload)
-            intent = Intent(this, Transmission::class.java)
-            startActivity(intent)
+            val sharedPref = this?.getSharedPreferences("User", Context.MODE_PRIVATE)
+
+            val role = sharedPref.getInt("role", 1000)
+            if(role==2){
+                intent = Intent(this, Transmission::class.java)
+                startActivity(intent)
+            }
+            else{
+                intent = Intent(this, Listen::class.java)
+                startActivity(intent)
+            }
+
 
         }
 
