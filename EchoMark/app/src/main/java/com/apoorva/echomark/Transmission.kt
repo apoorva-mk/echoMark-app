@@ -24,7 +24,9 @@ import io.chirp.chirpsdk.models.ChirpError
 import io.chirp.chirpsdk.models.ChirpErrorCode
 import org.json.JSONObject
 import android.content.SharedPreferences
+import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
+import android.widget.LinearLayout.HORIZONTAL
 import kotlinx.android.synthetic.main.activity_transmission.*
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -43,6 +45,7 @@ class Transmission : AppCompatActivity() {
     private lateinit var identifier: String
     private lateinit var payload: ByteArray
     val attendees: ArrayList<String> = ArrayList()
+    val attendeeObjects : ArrayList<AttendanceResponses> = ArrayList()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_transmission)
@@ -121,7 +124,13 @@ class Transmission : AppCompatActivity() {
             addAttendees()
             Log.i("sizeee", attendees.size.toString())
             attendance_list.layoutManager = LinearLayoutManager(this)
-            attendance_list.adapter = AttendeeAdapter(attendees, this)
+            attendance_list.addItemDecoration(
+                DividerItemDecoration(
+                    attendance_list.getContext(),
+                    DividerItemDecoration.VERTICAL
+                )
+            )
+            attendance_list.adapter = AttendeeAdapter(attendeeObjects, this)
         }
 
 
@@ -262,7 +271,8 @@ class Transmission : AppCompatActivity() {
 //            }
 //
 //        }
-        attendees.clear()
+        //attendees.clear()
+
         val queue = Volley.newRequestQueue(this)
         var url = "https://echomark.herokuapp.com/users/sign_in?username=gj&password=gj"
         url = "https://echomark.herokuapp.com/attendances.json"
@@ -271,6 +281,7 @@ class Transmission : AppCompatActivity() {
             Request.Method.GET, url,
             Response.Listener<String> { response ->
                 Log.i("SUCCESS", "")
+                //attendeeObjects.clear()
                 val gson = Gson()
                 val attendeeTutorialType = object : TypeToken<Array<AttendanceResponses>>() {}.type
                 var attendee: Array<AttendanceResponses> =
@@ -278,6 +289,7 @@ class Transmission : AppCompatActivity() {
                 for (item in attendee) {
                     Log.i("EEEE", item.username)
                     attendees.add(item.username)
+                    attendeeObjects.add(item)
                 }
                 //Log.i("Ddassda", tutorials.toString() )
             },
