@@ -4,6 +4,8 @@ import android.content.Context
 import android.media.MediaCas
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.widget.DividerItemDecoration
+import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import com.android.volley.Request
 import com.android.volley.Response
@@ -11,6 +13,7 @@ import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import kotlinx.android.synthetic.main.activity_transmission.*
 import kotlinx.android.synthetic.main.content_main.*
 
 class PastClasses : AppCompatActivity() {
@@ -25,6 +28,14 @@ class PastClasses : AppCompatActivity() {
         val id = sharedPref.getInt("id", 1000)
 
         getSessions(id)
+        attendance_list.layoutManager = LinearLayoutManager(this)
+        attendance_list.addItemDecoration(
+            DividerItemDecoration(
+                attendance_list.getContext(),
+                DividerItemDecoration.VERTICAL
+            )
+        )
+        attendance_list.adapter = SessionAdapter(pastClasses, this)
     }
 
     private fun getSessions(id: Int){

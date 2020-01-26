@@ -73,6 +73,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
 
         val button = findViewById(R.id.button) as Button
+        val pastClassesBtn = findViewById<Button>(R.id.pastClasses) as Button
         button?.setOnClickListener()
         {
            // Toast.makeText(this@MainActivity, "Button click" , Toast.LENGTH_LONG).show()
@@ -80,6 +81,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             intent = Intent(this, Transmission::class.java)
             startActivity(intent)
 
+        }
+
+        pastClassesBtn?.setOnClickListener {
+            intent = Intent(this, PastClasses::class.java)
+            startActivity(intent)
         }
         this.context = this
     }
