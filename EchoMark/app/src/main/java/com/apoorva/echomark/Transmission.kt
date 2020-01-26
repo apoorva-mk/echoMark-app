@@ -156,7 +156,7 @@ class Transmission : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        
+        super.onResume()
 
         if (ContextCompat.checkSelfPermission(
                 this,
