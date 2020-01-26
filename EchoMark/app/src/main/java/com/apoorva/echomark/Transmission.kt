@@ -102,7 +102,6 @@ class Transmission : AppCompatActivity() {
 
         chirpSdk.onSent { data: ByteArray, channel: Int ->
             Log.v("ChirpSDK", "Sent data")
-            rippleBackground.stopRippleAnimation()
         }
 
 
@@ -111,7 +110,6 @@ class Transmission : AppCompatActivity() {
             // Toast.makeText(this@MainActivity, "But
             // ton click" , Toast.LENGTH_LONG).show()
             var sessionKey = getSessionKey()
-            sendPayload(sessionKey)
             //chirpSdk.send(payload)
             rippleBackground.startRippleAnimation()
 
@@ -199,7 +197,7 @@ class Transmission : AppCompatActivity() {
         }
     }
 
-    private fun getSessionKey(): String {
+    private fun getSessionKey() {
         val service = ServiceVolley()
         val apiController = APIController(service)
         var sessionKey: String = "Not Received"
@@ -218,10 +216,11 @@ class Transmission : AppCompatActivity() {
             if (response != null) {
                 sessionKey = response.getString("key")
                 sessionID = response.getString("id")
+                Log.i("debug", sessionID + "#" + sessionKey)
+                sendPayload(sessionID + "#" + sessionKey)
             }
 
         }
-        return sessionID + "#" + sessionKey
     }
 
 
