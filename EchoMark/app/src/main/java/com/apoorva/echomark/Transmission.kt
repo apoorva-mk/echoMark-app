@@ -32,7 +32,8 @@ import com.google.gson.reflect.TypeToken
 
 private const val CHIRP_APP_KEY = "Fcae7f3Fc0611f27EDCdAa1Ef"
 private const val CHIRP_APP_SECRET = "daB2BAA1Db87D1113cA74BAA6AA03B2FB6b7FF12Fd89ab60c3"
-private const val CHIRP_APP_CONFIG = "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"
+private const val CHIRP_APP_CONFIG =
+    "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"
 private const val REQUEST_RECORD_AUDIO = 1
 
 class Transmission : AppCompatActivity() {
@@ -76,14 +77,15 @@ class Transmission : AppCompatActivity() {
                 val message = String(data, Charsets.UTF_8)
                 Log.i("Message: ", message)
                 toast(message)
-
+                val splitStrings = message.split("#")
                 val path = "attendances.json"
                 val params = JSONObject()
                 val sharedPref = this?.getSharedPreferences("User", Context.MODE_PRIVATE)
 
                 val a = sharedPref.getInt("id", 1000)
                 params.put("user_id", a.toString())
-                params.put("key", message)
+                params.put("session_id", splitStrings[0])
+                params.put("key", splitStrings[1])
                 val service = ServiceVolley()
                 val apiController = APIController(service)
 
@@ -95,13 +97,18 @@ class Transmission : AppCompatActivity() {
             }
         }
 
+        chirpSdk.onSent { data: ByteArray, channel: Int ->
+            Log.v("ChirpSDK", "Sent data")
+            rippleBackground.stopRippleAnimation()
+        }
 
 
         sendBtn?.setOnClickListener()
         {
             // Toast.makeText(this@MainActivity, "But
             // ton click" , Toast.LENGTH_LONG).show()
-            getSessionKey()
+            var sessionKey = getSessionKey()
+            sendPayload(sessionKey)
             //chirpSdk.send(payload)
             rippleBackground.startRippleAnimation()
 
@@ -116,7 +123,6 @@ class Transmission : AppCompatActivity() {
             attendance_list.layoutManager = LinearLayoutManager(this)
             attendance_list.adapter = AttendeeAdapter(attendees, this)
         }
-
 
 
     }
@@ -174,28 +180,39 @@ class Transmission : AppCompatActivity() {
         chirpSdk.stop()
     }
 
-    private fun getSessionKey() {
+    override fun onDestroy() {
+        super.onDestroy()
+        chirpSdk.stop()
+        try {
+            chirpSdk.close()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    private fun getSessionKey(): String {
         val service = ServiceVolley()
         val apiController = APIController(service)
-
+        var sessionKey: String = "Not Received"
+        var sessionID: String = ""
         val path = "sessions.json"
         val params = JSONObject()
         val sharedPref = this?.getSharedPreferences("User", Context.MODE_PRIVATE)
 
         val a = sharedPref.getInt("id", 1000)
-        Log.i("resss",a.toString())
+        Log.i("resss", a.toString())
         params.put("user_id", a.toString())
 
         apiController.post(path, params) { response ->
             // Parse the result
             Log.i("Success", response.toString())
-                if(response!=null){
-                    var sessionKey = response.getString("key")
-                    sendPayload(sessionKey)
-                }
+            if (response != null) {
+                sessionKey = response.getString("key")
+                sessionID = response.getString("id")
+            }
 
         }
-
+        return sessionID + "#" + sessionKey
     }
 
 
@@ -207,8 +224,9 @@ class Transmission : AppCompatActivity() {
          */
         val payload = payload.toByteArray(Charsets.UTF_8)
         val maxPayloadLength = chirpSdk.maxPayloadLength()
+        val payloadSize = payload.size
         if (payload.size > maxPayloadLength) {
-            Log.e("ChirpSDKError: ", "Payload too long")
+            Log.e("ChirpSDKError: ", "Payload too long $payloadSize $maxPayloadLength")
             return;
         }
         val error = chirpSdk.send(payload)
@@ -224,7 +242,7 @@ class Transmission : AppCompatActivity() {
         }
     }
 
-    private fun addAttendees(){
+    private fun addAttendees() {
 //        attendees.add("AAA")
 //        attendees.add("BBB")
         val service = ServiceVolley()
@@ -255,15 +273,16 @@ class Transmission : AppCompatActivity() {
                 Log.i("SUCCESS", "")
                 val gson = Gson()
                 val attendeeTutorialType = object : TypeToken<Array<AttendanceResponses>>() {}.type
-                var attendee: Array<AttendanceResponses> = gson.fromJson(response, attendeeTutorialType)
-                for (item in attendee){
-                    Log.i("EEEE",item.username)
+                var attendee: Array<AttendanceResponses> =
+                    gson.fromJson(response, attendeeTutorialType)
+                for (item in attendee) {
+                    Log.i("EEEE", item.username)
                     attendees.add(item.username)
                 }
                 //Log.i("Ddassda", tutorials.toString() )
             },
             Response.ErrorListener { error ->
-                Log.i(error.toString(),"FAILLL")
+                Log.i(error.toString(), "FAILLL")
             })
 
         queue.add(stringRequest)
