@@ -2,6 +2,7 @@ package com.apoorva.echomark
 
 import android.Manifest
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -25,6 +26,8 @@ import org.json.JSONObject
 import android.content.SharedPreferences
 import android.support.v7.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_transmission.*
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 
 
 private const val CHIRP_APP_KEY = "Fcae7f3Fc0611f27EDCdAa1Ef"
@@ -109,6 +112,7 @@ class Transmission : AppCompatActivity() {
 
         refreshBtn?.setOnClickListener {
             addAttendees()
+            Log.i("sizeee", attendees.size.toString())
             attendance_list.layoutManager = LinearLayoutManager(this)
             attendance_list.adapter = AttendeeAdapter(attendees, this)
         }
@@ -226,20 +230,43 @@ class Transmission : AppCompatActivity() {
         val service = ServiceVolley()
         val apiController = APIController(service)
 
-        val path = "attendances.json"
-        val params = JSONObject()
-        apiController.post(path, params) { response ->
-            // Parse the result
-            Log.i("Success", response.toString())
-            if(response!=null){
-                var arr = response.getJSONArray("")
-                for (i in 0 until arr.length()) {
-                    Log.i("fsdfd", arr.get(i).toString())
-                   // val item = response.getJSONObject(response(i))
-                }
-            }
+//        val path = "attendances.json"
+//        val params = JSONObject()
+//        apiController.get(path, params) { response ->
+//            // Parse the result
+//            Log.i("Success", response.toString())
+//            if(response!=null){
+//                var arr = response.getJSONArray("")
+//                for (i in 0 until arr.length()) {
+//                    Log.i("fsdfd", arr.get(i).toString())
+//                   // val item = response.getJSONObject(response(i))
+//                }
+//            }
+//
+//        }
+        attendees.clear()
+        val queue = Volley.newRequestQueue(this)
+        var url = "https://echomark.herokuapp.com/users/sign_in?username=gj&password=gj"
+        url = "https://echomark.herokuapp.com/attendances.json"
 
-        }
+        val stringRequest = StringRequest(
+            Request.Method.GET, url,
+            Response.Listener<String> { response ->
+                Log.i("SUCCESS", "")
+                val gson = Gson()
+                val attendeeTutorialType = object : TypeToken<Array<AttendanceResponses>>() {}.type
+                var attendee: Array<AttendanceResponses> = gson.fromJson(response, attendeeTutorialType)
+                for (item in attendee){
+                    Log.i("EEEE",item.username)
+                    attendees.add(item.username)
+                }
+                //Log.i("Ddassda", tutorials.toString() )
+            },
+            Response.ErrorListener { error ->
+                Log.i(error.toString(),"FAILLL")
+            })
+
+        queue.add(stringRequest)
 
 
     }
