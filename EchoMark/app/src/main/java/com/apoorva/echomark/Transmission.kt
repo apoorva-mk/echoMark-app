@@ -22,6 +22,9 @@ import io.chirp.chirpsdk.ChirpSDK
 import io.chirp.chirpsdk.models.ChirpError
 import io.chirp.chirpsdk.models.ChirpErrorCode
 import org.json.JSONObject
+import android.content.SharedPreferences
+
+
 
 private const val CHIRP_APP_KEY = "FBD7A2C6Be3CC67DBfeFeeBf3"
 private const val CHIRP_APP_SECRET = "21F7fdfF3840332006e51D3a88abed7d1b6eB259DCe28eFdDC"
@@ -144,11 +147,20 @@ class Transmission : AppCompatActivity() {
 
         val path = "sessions.json"
         val params = JSONObject()
-        params.put("user_id", "1")
+        val sharedPref = this?.getSharedPreferences("User", Context.MODE_PRIVATE)
+
+        val a = sharedPref.getInt("id", 1000)
+        Log.i("resss",a.toString())
+        params.put("user_id", a.toString())
 
         apiController.post(path, params) { response ->
             // Parse the result
             Log.i("Success", response.toString())
+                if(response!=null){
+                    var sessionKey = response.getString("key")
+                    sendPayload(sessionKey)
+                }
+
         }
 
     }

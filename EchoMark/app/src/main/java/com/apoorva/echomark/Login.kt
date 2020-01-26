@@ -1,5 +1,6 @@
 package com.apoorva.echomark
 
+import android.content.Context
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -10,6 +11,10 @@ import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import android.content.SharedPreferences
+import android.R.id.edit
+import org.json.JSONObject
+
 
 class Login : AppCompatActivity() {
 
@@ -38,8 +43,21 @@ class Login : AppCompatActivity() {
             Request.Method.GET, url,
             Response.Listener<String> { response ->
                 Log.i("SUCCESS", "DUMBICCH")
+                var obj = JSONObject(response)
+                val sharedPreferences = getSharedPreferences(
+                    "User",
+                    Context.MODE_PRIVATE
+                )
+                val myEdit = sharedPreferences.edit()
+                myEdit.putString("username", obj.getString("username"))
+                myEdit.putInt("id", obj.getInt("id"))
+                myEdit.putInt("role", obj.getInt("role"))
+                myEdit.commit()
+                Log.i("iii", sharedPreferences.getInt("id", 1000).toString())
+                Log.i("resss: ", obj.getString("username"))
                 intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
+
             },
             Response.ErrorListener { error ->
                 Log.i(error.toString(),"FAILLL")
